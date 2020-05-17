@@ -18,6 +18,7 @@ public:
 	HashMap(unsigned = 1009);
 	HashMap(const HashMap&);
 	HashMap& operator=(const HashMap&);
+	~HashMap();
 
 	// adauga un element nou in HashMap
 	void add(K, V);
@@ -64,6 +65,20 @@ HashMap<K, V, F>::HashMap(const HashMap<K, V, F>& h)
 		else
 			arr[i] = NULL;
 	}
+}
+
+template <class K, class V, class F>
+HashMap<K, V, F>::~HashMap() {
+	for (unsigned i = 0; i < size; i++)
+		if (arr[i] != NULL) {
+			Node<K, V>* p = arr[i], * q = NULL;
+			while (p != NULL) {
+				q = p;
+				p = p->next;
+				delete q;
+			}
+		}
+	delete[] arr;
 }
 
 template <class K, class V, class F>
